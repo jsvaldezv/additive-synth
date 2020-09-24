@@ -4,6 +4,8 @@
 #include "Synth_Volumen.h"
 #include "Synth_Oscillators.h"
 #include "Synth_LFO.h"
+#include "Synth_Sound.h"
+#include "Synth_Voice.h"
 
 class SynthCursoAudioProcessor  : public juce::AudioProcessor
 {
@@ -57,6 +59,11 @@ private:
     juce::ScopedPointer<Synth_Volumen> paraVolumen [2];
     juce::ScopedPointer<Synth_Oscillators> paraOscillator [2];
     juce::ScopedPointer<Synth_LFO> paraLFO [2];
+    
+    juce::Synthesiser mySynth;
+    juce::Synthesiser* myVoice;
+    
+    double lastSampleRate;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SynthCursoAudioProcessor)
 };

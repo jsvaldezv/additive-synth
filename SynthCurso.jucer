@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="VxLI2I" name="SynthCurso" projectType="audioplug" useAppConfig="0"
-              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
+              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
+              pluginCharacteristicsValue="pluginIsSynth,pluginProducesMidiOut,pluginWantsMidiIn"
+              pluginManufacturer="Tec">
   <MAINGROUP id="LqWnrd" name="SynthCurso">
     <FILE id="KmoBRh" name="AudioHelpers.h" compile="0" resource="0" file="Source/AudioHelpers.h"/>
     <GROUP id="{EAAAD254-2E52-6328-C63D-3F0BED585D44}" name="Source">
@@ -20,6 +22,10 @@
             file="Source/Synth_Oscillators.cpp"/>
       <FILE id="CGgwcn" name="Synth_Oscillators.h" compile="0" resource="0"
             file="Source/Synth_Oscillators.h"/>
+      <FILE id="CUZ70m" name="Synth_Voice.cpp" compile="1" resource="0" file="Source/Synth_Voice.cpp"/>
+      <FILE id="bcjTQQ" name="Synth_Voice.h" compile="0" resource="0" file="Source/Synth_Voice.h"/>
+      <FILE id="ppYvlI" name="Synth_Sound.cpp" compile="1" resource="0" file="Source/Synth_Sound.cpp"/>
+      <FILE id="Ko9QlJ" name="Synth_Sound.h" compile="0" resource="0" file="Source/Synth_Sound.h"/>
       <FILE id="WkvW91" name="Synth_Volumen.cpp" compile="1" resource="0"
             file="Source/Synth_Volumen.cpp"/>
       <FILE id="Xi96rz" name="Synth_Volumen.h" compile="0" resource="0" file="Source/Synth_Volumen.h"/>

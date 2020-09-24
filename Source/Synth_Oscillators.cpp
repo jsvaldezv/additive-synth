@@ -14,13 +14,10 @@ Synth_Oscillators::~Synth_Oscillators()
 
 void Synth_Oscillators::wavetable(float inSampleRate)
 {
-    //waveTableSineWave.clear();
-    
     phase = 0;
     amplitude = 1;
     frequency = 300;
     wtSize = 1024;
-    //increment = frequency * wtSize;
     mySampleRate = inSampleRate;
     
     for(int i=0; i < wtSize; i++)

@@ -18,6 +18,16 @@ SynthCursoAudioProcessor::SynthCursoAudioProcessor()
     addParameter(sliSquareWave = new juce::AudioParameterFloat("sliSquareWave", "SquareWave", 0.0f, 1.0f, 0.0f));
     addParameter(sliTriangleWave = new juce::AudioParameterFloat("sliTriangleWave", "TriangleWave", 0.0f, 1.0f, 0.0f));
     addParameter(sliWhiteNoise = new juce::AudioParameterFloat("sliWhiteNoise", "WhiteNoise", 0.0f, 1.0f, 0.0f));
+    
+    mySynth.clearVoices();
+    
+    for(int i=0; i<5; i++)
+    {
+        mySynth.addVoice(new Synth_Voice);
+    }
+    
+    mySynth.clearSounds();
+    mySynth.addSound(new Synth_Sound);
 }
 
 SynthCursoAudioProcessor::~SynthCursoAudioProcessor()
@@ -97,6 +107,10 @@ void SynthCursoAudioProcessor::prepareToPlay (double sampleRate, int samplesPerB
         paraOscillator[i]->wavetable(sampleRate);
         paraLFO[i]->wavetable(sampleRate);
     }
+    
+    juce::ignoreUnused(samplesPerBlock);
+    lastSampleRate = sampleRate;
+    mySynth.setCurrentPlaybackSampleRate(lastSampleRate);
 }
 
 void SynthCursoAudioProcessor::initializeDSP()
@@ -147,7 +161,9 @@ void SynthCursoAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
 
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
-
+    
+    mySynth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
+    
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);

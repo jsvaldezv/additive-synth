@@ -1,15 +1,6 @@
-/*
-  ==============================================================================
-
-    This file contains the basic framework code for a JUCE plugin editor.
-
-  ==============================================================================
-*/
-
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
-//==============================================================================
 SynthCursoAudioProcessorEditor::SynthCursoAudioProcessorEditor (SynthCursoAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
@@ -22,7 +13,6 @@ SynthCursoAudioProcessorEditor::~SynthCursoAudioProcessorEditor()
 {
 }
 
-//==============================================================================
 void SynthCursoAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
@@ -30,7 +20,7 @@ void SynthCursoAudioProcessorEditor::paint (juce::Graphics& g)
 
     g.setColour (juce::Colours::white);
     g.setFont (15.0f);
-    g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
+    g.drawFittedText ("Synth", getLocalBounds(), juce::Justification::centred, 1);
 }
 
 void SynthCursoAudioProcessorEditor::resized()
