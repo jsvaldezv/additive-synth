@@ -56,9 +56,9 @@ private:
     juce::AudioParameterFloat* sliTriangleWave;
     juce::AudioParameterFloat* sliWhiteNoise;
     
-    juce::ScopedPointer<Synth_Volumen> paraVolumen [2];
-    juce::ScopedPointer<Synth_Oscillators> paraOscillator [2];
-    juce::ScopedPointer<Synth_LFO> paraLFO [2];
+    //juce::ScopedPointer<Synth_Volumen> paraVolumen [2];
+    //juce::ScopedPointer<Synth_Oscillators> paraOscillator [2];
+    //juce::ScopedPointer<Synth_LFO> paraLFO [2];
     
     juce::Synthesiser mySynth;
     //juce::Synthesiser* myVoice;

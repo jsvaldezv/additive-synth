@@ -63,8 +63,8 @@ double Synth_Oscillators::sineWave(double frequency)
 {
     increment = frequency * wtSize / mySampleRate;
     
-    output = waveTableSineWave[(int)phase];
-    //output = waveTableSquareWave[(int)phase];
+    //output = waveTableSineWave[(int)phase];
+    output = waveTableSquareWave[(int)phase];
     //output = waveTableTriangleWave[(int)phase];
     phase = fmod(phase+increment, wtSize);
     

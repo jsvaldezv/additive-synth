@@ -118,9 +118,9 @@ void SynthCursoAudioProcessor::initializeDSP()
 {
     for(int i=0; i<2; i++)
     {
-        paraVolumen[i] = new Synth_Volumen;
-        paraOscillator[i] = new Synth_Oscillators;
-        paraLFO[i] = new Synth_LFO;
+        //paraVolumen[i] = new Synth_Volumen;
+        //paraOscillator[i] = new Synth_Oscillators;
+        //paraLFO[i] = new Synth_LFO;
     }
 }
 
@@ -163,7 +163,6 @@ void SynthCursoAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
     
-
     mySynth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 
     /*for (int channel = 0; channel < totalNumInputChannels; ++channel)

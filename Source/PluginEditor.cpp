@@ -5,6 +5,12 @@ SynthCursoAudioProcessorEditor::SynthCursoAudioProcessorEditor (SynthCursoAudioP
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
     setSize (400, 300);
+    
+    addAndMakeVisible(oscOneVol);
+    oscOneVol.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    oscOneVol.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 20);
+    oscOneVol.setRange(0.0f, 1.0f, 0.7f);
+    oscOneVol.setBounds(0, 0, 100, 100);
 }
 
 SynthCursoAudioProcessorEditor::~SynthCursoAudioProcessorEditor()
