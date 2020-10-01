@@ -19,6 +19,7 @@ void Synth_LFO::wavetable(float inSampleRate)
     
     for(int i=0; i < wtSize; i++)
     {
+        //SINE WAVE
         waveTableSineWave.insert(i, sin(2.0 * VALOR_PI * i/wtSize));
     }
 }

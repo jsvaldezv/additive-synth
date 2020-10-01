@@ -61,7 +61,8 @@ private:
     juce::ScopedPointer<Synth_LFO> paraLFO [2];
     
     juce::Synthesiser mySynth;
-    juce::Synthesiser* myVoice;
+    //juce::Synthesiser* myVoice;
+    Synth_Voice* myVoice;
     
     double lastSampleRate;
     

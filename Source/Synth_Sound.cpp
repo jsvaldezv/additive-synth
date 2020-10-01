@@ -1,6 +1,5 @@
 #include "Synth_Sound.h"
 
-
 Synth_Sound::Synth_Sound()
 {
     
@@ -20,3 +19,5 @@ bool Synth_Sound::appliesToChannel (int)
 {
     return true;
 }
+
+

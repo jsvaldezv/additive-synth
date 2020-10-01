@@ -102,13 +102,14 @@ void SynthCursoAudioProcessor::prepareToPlay (double sampleRate, int samplesPerB
 {
     initializeDSP();
     
-    for(int i=0; i<2; i++)
+    /*for(int i=0; i<2; i++)
     {
         paraOscillator[i]->wavetable(sampleRate);
         paraLFO[i]->wavetable(sampleRate);
-    }
-    
+    }*/
+
     juce::ignoreUnused(samplesPerBlock);
+    
     lastSampleRate = sampleRate;
     mySynth.setCurrentPlaybackSampleRate(lastSampleRate);
 }
@@ -162,9 +163,10 @@ void SynthCursoAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
     
+
     mySynth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
-    
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
+
+    /*for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
     
@@ -176,15 +178,15 @@ void SynthCursoAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
                                          *sliTriangleWave,
                                          *sliWhiteNoise);
         
-        /*paraLFO[channel]->process(channelData,
+        paraLFO[channel]->process(channelData,
                                   channelData,
-                                  buffer.getNumSamples());*/
+                                  buffer.getNumSamples());
 
         paraVolumen[channel]->processVolumen(channelData,
                                              *sliVolume,
                                              channelData,
                                              buffer.getNumSamples());
-    }
+    }*/
 }
 
 bool SynthCursoAudioProcessor::hasEditor() const

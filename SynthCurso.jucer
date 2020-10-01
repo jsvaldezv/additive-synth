@@ -16,19 +16,19 @@
       <FILE id="GTFWC4" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
     <GROUP id="{C0128750-0DBE-4442-8E93-65299337D607}" name="DSP">
-      <FILE id="C2GcQv" name="Synth_LFO.cpp" compile="1" resource="0" file="Source/Synth_LFO.cpp"/>
-      <FILE id="swEnk2" name="Synth_LFO.h" compile="0" resource="0" file="Source/Synth_LFO.h"/>
+      <FILE id="WkvW91" name="Synth_Volumen.cpp" compile="1" resource="0"
+            file="Source/Synth_Volumen.cpp"/>
+      <FILE id="Xi96rz" name="Synth_Volumen.h" compile="0" resource="0" file="Source/Synth_Volumen.h"/>
       <FILE id="RZqtlV" name="Synth_Oscillators.cpp" compile="1" resource="0"
             file="Source/Synth_Oscillators.cpp"/>
       <FILE id="CGgwcn" name="Synth_Oscillators.h" compile="0" resource="0"
             file="Source/Synth_Oscillators.h"/>
+      <FILE id="C2GcQv" name="Synth_LFO.cpp" compile="1" resource="0" file="Source/Synth_LFO.cpp"/>
+      <FILE id="swEnk2" name="Synth_LFO.h" compile="0" resource="0" file="Source/Synth_LFO.h"/>
       <FILE id="CUZ70m" name="Synth_Voice.cpp" compile="1" resource="0" file="Source/Synth_Voice.cpp"/>
       <FILE id="bcjTQQ" name="Synth_Voice.h" compile="0" resource="0" file="Source/Synth_Voice.h"/>
       <FILE id="ppYvlI" name="Synth_Sound.cpp" compile="1" resource="0" file="Source/Synth_Sound.cpp"/>
       <FILE id="Ko9QlJ" name="Synth_Sound.h" compile="0" resource="0" file="Source/Synth_Sound.h"/>
-      <FILE id="WkvW91" name="Synth_Volumen.cpp" compile="1" resource="0"
-            file="Source/Synth_Volumen.cpp"/>
-      <FILE id="Xi96rz" name="Synth_Volumen.h" compile="0" resource="0" file="Source/Synth_Volumen.h"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>

@@ -19,6 +19,8 @@ class Synth_Oscillators
                  float inTriangleWave,
                  float inWhiteNoise);
     
+    double sineWave(double frequency);
+    
     private:
     
     juce::Array<float> waveTableSineWave;
@@ -28,4 +30,6 @@ class Synth_Oscillators
     juce::Random random;
     
     double phase, amplitude, frequency, increment, wtSize, mySampleRate;
+    
+    double output;
 };
