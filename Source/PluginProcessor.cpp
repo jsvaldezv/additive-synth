@@ -10,15 +10,9 @@ SynthCursoAudioProcessor::SynthCursoAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ), parameters(*this, nullptr, "PARAMETERS", initializeGUI())
 #endif
 {
-    addParameter(sliVolume = new juce::AudioParameterFloat("sliVolume", "Volumen", 0.0f, 1.0f, 0.5f));
-    addParameter(sliSineWave = new juce::AudioParameterFloat("sliSineWave", "SineWave", 0.0f, 1.0f, 0.0f));
-    addParameter(sliSquareWave = new juce::AudioParameterFloat("sliSquareWave", "SquareWave", 0.0f, 1.0f, 0.0f));
-    addParameter(sliTriangleWave = new juce::AudioParameterFloat("sliTriangleWave", "TriangleWave", 0.0f, 1.0f, 0.0f));
-    addParameter(sliWhiteNoise = new juce::AudioParameterFloat("sliWhiteNoise", "WhiteNoise", 0.0f, 1.0f, 0.0f));
-    
     mySynth.clearVoices();
     
     for(int i=0; i<5; i++)
@@ -28,6 +22,8 @@ SynthCursoAudioProcessor::SynthCursoAudioProcessor()
     
     mySynth.clearSounds();
     mySynth.addSound(new Synth_Sound);
+    
+    volGeneral = 0.1f;
 }
 
 SynthCursoAudioProcessor::~SynthCursoAudioProcessor()
@@ -35,7 +31,43 @@ SynthCursoAudioProcessor::~SynthCursoAudioProcessor()
     
 }
 
-//==============================================================================
+juce::AudioProcessorValueTreeState::ParameterLayout SynthCursoAudioProcessor::initializeGUI()
+{
+    std::vector <std::unique_ptr<juce::RangedAudioParameter>> params;
+    
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("volume",
+                                                                 "Volume",
+                                                                 0.0f,
+                                                                 1.0f,
+                                                                 0.5f));
+    
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("oscone",
+                                                                 "Oscone",
+                                                                 0.0f,
+                                                                 1.0f,
+                                                                 0.5f));
+    
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("osctwo",
+                                                                 "Osctwo",
+                                                                 0.0f,
+                                                                 1.0f,
+                                                                 0.5f));
+    
+    params.push_back(std::make_unique<juce::AudioParameterChoice>("typeoscone",
+                                                                  "Typeoscone",
+                                                                  juce::StringArray("Sine",
+                                                                                    "Square",
+                                                                                    "Triangle"),0));
+    
+    params.push_back(std::make_unique<juce::AudioParameterChoice>("typeosctwo",
+                                                                  "Typeosctwo",
+                                                                  juce::StringArray("Sine",
+                                                                                    "Square",
+                                                                                    "Triangle"),0));
+    
+    return {params.begin(), params.end()};
+}
+
 const juce::String SynthCursoAudioProcessor::getName() const
 {
     return JucePlugin_Name;
@@ -75,8 +107,7 @@ double SynthCursoAudioProcessor::getTailLengthSeconds() const
 
 int SynthCursoAudioProcessor::getNumPrograms()
 {
-    return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
-                // so this should be at least 1, even if you're not really implementing programs.
+    return 1;
 }
 
 int SynthCursoAudioProcessor::getCurrentProgram()
@@ -86,6 +117,7 @@ int SynthCursoAudioProcessor::getCurrentProgram()
 
 void SynthCursoAudioProcessor::setCurrentProgram (int index)
 {
+    
 }
 
 const juce::String SynthCursoAudioProcessor::getProgramName (int index)
@@ -95,9 +127,9 @@ const juce::String SynthCursoAudioProcessor::getProgramName (int index)
 
 void SynthCursoAudioProcessor::changeProgramName (int index, const juce::String& newName)
 {
+    
 }
 
-//==============================================================================
 void SynthCursoAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     initializeDSP();
@@ -116,18 +148,17 @@ void SynthCursoAudioProcessor::prepareToPlay (double sampleRate, int samplesPerB
 
 void SynthCursoAudioProcessor::initializeDSP()
 {
-    for(int i=0; i<2; i++)
+    /*for(int i=0; i<2; i++)
     {
         //paraVolumen[i] = new Synth_Volumen;
         //paraOscillator[i] = new Synth_Oscillators;
         //paraLFO[i] = new Synth_LFO;
-    }
+    }*/
 }
 
 void SynthCursoAudioProcessor::releaseResources()
 {
-    // When playback stops, you can use this as an opportunity to free up any
-    // spare memory, etc.
+
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -137,13 +168,11 @@ bool SynthCursoAudioProcessor::isBusesLayoutSupported (const BusesLayout& layout
     juce::ignoreUnused (layouts);
     return true;
   #else
-    // This is the place where you check if the layout is supported.
-    // In this template code we only support mono or stereo.
+
     if (layouts.getMainOutputChannelSet() != juce::AudioChannelSet::mono()
      && layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
         return false;
 
-    // This checks if the input layout matches the output layout
    #if ! JucePlugin_IsSynth
     if (layouts.getMainOutputChannelSet() != layouts.getMainInputChannelSet())
         return false;
@@ -163,34 +192,25 @@ void SynthCursoAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
     
-    mySynth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
-
-    /*for (int channel = 0; channel < totalNumInputChannels; ++channel)
+    for(int i=0; i < mySynth.getNumVoices(); i++)
     {
-        auto* channelData = buffer.getWritePointer (channel);
+        if((myVoice = dynamic_cast<Synth_Voice*>(mySynth.getVoice(i))))
+        {
+            myVoice->getParams(*parameters.getRawParameterValue("volume"),
+                               *parameters.getRawParameterValue("oscone"),
+                               *parameters.getRawParameterValue("osctwo"),
+                               *parameters.getRawParameterValue("typeoscone"),
+                               *parameters.getRawParameterValue("typeosctwo"));
+        }
+    }
     
-        paraOscillator[channel]->process(channelData,
-                                         channelData,
-                                         buffer.getNumSamples(),
-                                         *sliSineWave,
-                                         *sliSquareWave,
-                                         *sliTriangleWave,
-                                         *sliWhiteNoise);
-        
-        paraLFO[channel]->process(channelData,
-                                  channelData,
-                                  buffer.getNumSamples());
-
-        paraVolumen[channel]->processVolumen(channelData,
-                                             *sliVolume,
-                                             channelData,
-                                             buffer.getNumSamples());
-    }*/
+    buffer.clear();
+    mySynth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 }
 
 bool SynthCursoAudioProcessor::hasEditor() const
 {
-    return true; // (change this to false if you choose to not supply an editor)
+    return true;
 }
 
 juce::AudioProcessorEditor* SynthCursoAudioProcessor::createEditor()

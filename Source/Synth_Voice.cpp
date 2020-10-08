@@ -3,6 +3,13 @@
 Synth_Voice::Synth_Voice()
 {
     osc1.wavetable(48000);
+    smoothOsc1 = 0.0;
+    smoothOsc2 = 0.0;
+    volGeneral = 0.0;
+    volOscOne = 0.0;
+    volOscTwo = 0.0;
+    valTypeOne = 0;
+    valTypeTwo = 0;
 }
 
 Synth_Voice::~Synth_Voice()
@@ -12,9 +19,7 @@ Synth_Voice::~Synth_Voice()
 
 void Synth_Voice::setMySampleRate(double inSampleRate)
 {
-    /*mySampleRate = inSampleRate;
-    osc1.wavetable(mySampleRate);
-    myADSR.setSampleRate(mySampleRate);*/
+
 }
 
 bool Synth_Voice::canPlaySound (juce::SynthesiserSound* sound)
@@ -22,34 +27,46 @@ bool Synth_Voice::canPlaySound (juce::SynthesiserSound* sound)
     return dynamic_cast<Synth_Sound*>(sound) != nullptr;
 }
 
+void Synth_Voice::getParams(float inVolGen,
+                            float inOscOne,
+                            float inOscTwo,
+                            int inTypeOne,
+                            int inTypeTwo)
+{
+    volGeneral = inVolGen;
+    volOscOne = inOscOne;
+    volOscTwo = inOscTwo;
+    valTypeOne = inTypeOne;
+    valTypeTwo = inTypeTwo;
+}
+
 void Synth_Voice::startNote (int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition)
 {
     level = velocity;
     frequency = juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber);
-    myADSR.noteOn();
-    
-    //CHECAR SI FUNCIONA
-    //DBG("MIDI NOTE: " << midiNoteNumber);
-    //DBG("FREQ: " << frequency);
 }
 
 void Synth_Voice::stopNote (float velocity, bool allowTailOff)
 {
     level = 0;
-    myADSR.noteOff();
 }
 
-void Synth_Voice::renderNextBlock (juce::AudioBuffer<float> &outputBuffer, int startSample, int numSamples)
+void Synth_Voice::renderNextBlock (juce::AudioBuffer<float> &outputBuffer,
+                                   int startSample,
+                                   int numSamples)
 {
-    myADSR.setParameters(myADSRParams);
-    
     for (int i=0; i < numSamples; i++)
     {
-        double theWaveMine = osc1.sineWave(frequency) * level;
+        //FUNCION SMOOTH
+        double osc1Signal = osc1.oscillatorOne(frequency, valTypeOne) * level * volOscOne;
+        double osc2Signal = osc1.oscillatorTwo(frequency, valTypeTwo) * level * volOscTwo;
+        smoothOsc1 = smoothOsc1 - 0.002*(smoothOsc1 - osc1Signal);
+        smoothOsc2 = smoothOsc2 - 0.002*(smoothOsc2 - osc2Signal);
         
+        //OBTENER SAMPLES DE WAVETABLE
         for (int channel=0; channel < outputBuffer.getNumChannels(); channel++)
         {
-            outputBuffer.addSample(channel, startSample, theWaveMine * 0.5);
+            outputBuffer.addSample(channel, startSample, smoothOsc1 + smoothOsc2);
         }
         
         ++startSample;
@@ -58,10 +75,7 @@ void Synth_Voice::renderNextBlock (juce::AudioBuffer<float> &outputBuffer, int s
 
 void Synth_Voice::getEnvelopeParams (float* attack, float* decay, float* sustain, float* release)
 {
-    myADSRParams.attack = 0.5;
-    myADSRParams.decay = 0.5;
-    myADSRParams.sustain = 1;
-    myADSRParams.release = 1;
+    
 }
 
 void Synth_Voice::pitchWheelMoved (int newPitchWheelValue)

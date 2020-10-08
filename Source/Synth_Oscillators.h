@@ -19,7 +19,8 @@ class Synth_Oscillators
                  float inTriangleWave,
                  float inWhiteNoise);
     
-    double sineWave(double frequency);
+    double oscillatorOne(double frequency, int inType);
+    double oscillatorTwo(double frequency, int inType);
     
     private:
     

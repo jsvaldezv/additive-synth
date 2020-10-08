@@ -46,7 +46,7 @@ void Synth_Oscillators::process(float* inAudio,
                                 float inTriangleWave,
                                 float inWhiteNoise)
 {
-    increment = frequency * wtSize / mySampleRate;
+    /*increment = frequency * wtSize / mySampleRate;
     
     for(int i=0; i < inSampleToRender; i++)
     {
@@ -56,16 +56,48 @@ void Synth_Oscillators::process(float* inAudio,
         outAudio[i] = inAudio[i] + ((random.nextFloat() * 0.25f - 0.125f) * inWhiteNoise);
         
         phase = fmod(phase+increment, wtSize);
-    }
+    }*/
 }
 
-double Synth_Oscillators::sineWave(double frequency)
+double Synth_Oscillators::oscillatorOne(double frequency, int inType)
 {
     increment = frequency * wtSize / mySampleRate;
     
-    //output = waveTableSineWave[(int)phase];
-    output = waveTableSquareWave[(int)phase];
-    //output = waveTableTriangleWave[(int)phase];
+    switch(inType)
+    {
+        case 0:
+            output = waveTableSineWave[(int)phase];
+            break;
+        case 1:
+            output = waveTableSquareWave[(int)phase];
+            break;
+        case 2:
+            output = waveTableTriangleWave[(int)phase];
+            break;
+    }
+
+    phase = fmod(phase+increment, wtSize);
+    
+    return output;
+}
+
+double Synth_Oscillators::oscillatorTwo(double frequency, int inType)
+{
+    increment = frequency * wtSize / mySampleRate;
+    
+    switch(inType)
+    {
+        case 0:
+            output = waveTableSineWave[(int)phase];
+            break;
+        case 1:
+            output = waveTableSquareWave[(int)phase];
+            break;
+        case 2:
+            output = waveTableTriangleWave[(int)phase];
+            break;
+    }
+    
     phase = fmod(phase+increment, wtSize);
     
     return output;

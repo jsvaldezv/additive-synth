@@ -19,14 +19,13 @@ public:
     void getEnvelopeParams (float* attack, float* decay, float* sustain, float* release);
     
     void setMySampleRate(double inSampleRate);
+    void getParams(float inVolGen, float inOscOne, float inOscTwo, int inTypeOne, int inTypeTwo);
 
 private:
     
-    double level, frequency, mySampleRate;
+    double level, frequency, mySampleRate, smoothOsc1, smoothOsc2;
+    float volGeneral, volOscOne, volOscTwo;
+    int valTypeOne, valTypeTwo;
     
-    Synth_Oscillators osc1;
-    
-    juce::ADSR myADSR;
-    juce::ADSR::Parameters myADSRParams;
-    
+    Synth_Oscillators osc1, osc2;
 };
