@@ -5,7 +5,7 @@
 
 class Synth_Oscillators
 {
-    public:
+public:
         
     Synth_Oscillators();
     ~Synth_Oscillators();
@@ -22,7 +22,7 @@ class Synth_Oscillators
     double oscillatorOne(double frequency, int inType);
     double oscillatorTwo(double frequency, int inType);
     
-    private:
+private:
     
     juce::Array<float> waveTableSineWave;
     juce::Array<float> waveTableSquareWave;
@@ -31,6 +31,5 @@ class Synth_Oscillators
     juce::Random random;
     
     double phase, amplitude, frequency, increment, wtSize, mySampleRate;
-    
     double output;
 };

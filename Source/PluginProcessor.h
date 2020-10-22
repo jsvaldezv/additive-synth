@@ -39,10 +39,12 @@ public:
     juce::AudioProcessorValueTreeState parameters;
     juce::AudioProcessorValueTreeState::ParameterLayout initializeGUI();
     void initializeDSP();
-    
     float volGeneral;
 
 private:
+    
+    juce::ScopedPointer<Synth_Oscillators> paraOscillator [2];
+    juce::ScopedPointer<Synth_LFO> paraLFO [2];
     
     juce::Synthesiser mySynth;
     Synth_Voice* myVoice;

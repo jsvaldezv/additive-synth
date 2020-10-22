@@ -52,3 +52,5 @@ JuceLibraryCode/JuceHeader.h
 JuceLibraryCode/JucePluginDefines.h
 JuceLibraryCode/ReadMe.txt
 .DS_Store
+Builds/MacOSX/SynthCurso.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+Builds/MacOSX/SynthCurso.xcodeproj/xcuserdata/jsvaldezv.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist

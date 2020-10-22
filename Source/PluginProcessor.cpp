@@ -65,6 +65,12 @@ juce::AudioProcessorValueTreeState::ParameterLayout SynthCursoAudioProcessor::in
                                                                                     "Square",
                                                                                     "Triangle"),0));
     
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("lfoone",
+                                                                 "Lfoone",
+                                                                 1.0f,
+                                                                 10.0f,
+                                                                 1.0f));
+    
     return {params.begin(), params.end()};
 }
 
@@ -134,11 +140,11 @@ void SynthCursoAudioProcessor::prepareToPlay (double sampleRate, int samplesPerB
 {
     initializeDSP();
     
-    /*for(int i=0; i<2; i++)
+    for(int i=0; i<2; i++)
     {
         paraOscillator[i]->wavetable(sampleRate);
-        paraLFO[i]->wavetable(sampleRate);
-    }*/
+        //paraLFO[i]->wavetable(sampleRate);
+    }
 
     juce::ignoreUnused(samplesPerBlock);
     
@@ -148,12 +154,11 @@ void SynthCursoAudioProcessor::prepareToPlay (double sampleRate, int samplesPerB
 
 void SynthCursoAudioProcessor::initializeDSP()
 {
-    /*for(int i=0; i<2; i++)
+    for(int i=0; i<2; i++)
     {
-        //paraVolumen[i] = new Synth_Volumen;
-        //paraOscillator[i] = new Synth_Oscillators;
+        paraOscillator[i] = new Synth_Oscillators;
         //paraLFO[i] = new Synth_LFO;
-    }*/
+    }
 }
 
 void SynthCursoAudioProcessor::releaseResources()
@@ -200,7 +205,8 @@ void SynthCursoAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
                                *parameters.getRawParameterValue("oscone"),
                                *parameters.getRawParameterValue("osctwo"),
                                *parameters.getRawParameterValue("typeoscone"),
-                               *parameters.getRawParameterValue("typeosctwo"));
+                               *parameters.getRawParameterValue("typeosctwo"),
+                               *parameters.getRawParameterValue("lfoone"));
         }
     }
     

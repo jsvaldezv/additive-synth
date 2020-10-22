@@ -10,6 +10,7 @@ Synth_Voice::Synth_Voice()
     volOscTwo = 0.0;
     valTypeOne = 0;
     valTypeTwo = 0;
+    rateLFOOne = 0.0;
 }
 
 Synth_Voice::~Synth_Voice()
@@ -31,13 +32,15 @@ void Synth_Voice::getParams(float inVolGen,
                             float inOscOne,
                             float inOscTwo,
                             int inTypeOne,
-                            int inTypeTwo)
+                            int inTypeTwo,
+                            float inRateLfoONe)
 {
     volGeneral = inVolGen;
     volOscOne = inOscOne;
     volOscTwo = inOscTwo;
     valTypeOne = inTypeOne;
     valTypeTwo = inTypeTwo;
+    rateLFOOne = inRateLfoONe;
 }
 
 void Synth_Voice::startNote (int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition)
@@ -60,15 +63,16 @@ void Synth_Voice::renderNextBlock (juce::AudioBuffer<float> &outputBuffer,
         //FUNCION SMOOTH
         double osc1Signal = osc1.oscillatorOne(frequency, valTypeOne) * level * volOscOne;
         double osc2Signal = osc1.oscillatorTwo(frequency, valTypeTwo) * level * volOscTwo;
+        double lfo1Signal = lfo1.LFOOne(rateLFOOne) * level;
+        
         smoothOsc1 = smoothOsc1 - 0.002*(smoothOsc1 - osc1Signal);
         smoothOsc2 = smoothOsc2 - 0.002*(smoothOsc2 - osc2Signal);
-        
         //OBTENER SAMPLES DE WAVETABLE
         for (int channel=0; channel < outputBuffer.getNumChannels(); channel++)
         {
-            outputBuffer.addSample(channel, startSample, smoothOsc1 + smoothOsc2);
+            outputBuffer.addSample(channel, startSample, (smoothOsc1 + smoothOsc2) * lfo1Signal);
         }
-        
+
         ++startSample;
     }
 }

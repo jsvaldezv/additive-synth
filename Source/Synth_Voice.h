@@ -2,6 +2,7 @@
 #include <JuceHeader.h>
 #include "Synth_Sound.h"
 #include "Synth_Oscillators.h"
+#include "Synth_LFO.h"
 
 class Synth_Voice : public juce::SynthesiserVoice
 {
@@ -19,13 +20,14 @@ public:
     void getEnvelopeParams (float* attack, float* decay, float* sustain, float* release);
     
     void setMySampleRate(double inSampleRate);
-    void getParams(float inVolGen, float inOscOne, float inOscTwo, int inTypeOne, int inTypeTwo);
+    void getParams(float inVolGen, float inOscOne, float inOscTwo, int inTypeOne, int inTypeTwo, float inRateLfoONe);
 
 private:
     
     double level, frequency, mySampleRate, smoothOsc1, smoothOsc2;
-    float volGeneral, volOscOne, volOscTwo;
+    float volGeneral, volOscOne, volOscTwo, rateLFOOne;
     int valTypeOne, valTypeTwo;
     
     Synth_Oscillators osc1, osc2;
+    Synth_LFO lfo1;
 };
