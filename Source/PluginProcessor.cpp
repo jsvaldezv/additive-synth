@@ -71,6 +71,20 @@ juce::AudioProcessorValueTreeState::ParameterLayout SynthCursoAudioProcessor::in
                                                                  10.0f,
                                                                  1.0f));
     
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("lfotwo",
+                                                                 "Lfotwo",
+                                                                 1.0f,
+                                                                 10.0f,
+                                                                 1.0f));
+    
+    params.push_back(std::make_unique<juce::AudioParameterBool>("lfooneButton",
+                                                                "LfooneButton",
+                                                                false));
+    
+    params.push_back(std::make_unique<juce::AudioParameterBool>("lfotwoButton",
+                                                                "LfotwoButton",
+                                                                false));
+    
     return {params.begin(), params.end()};
 }
 
@@ -206,7 +220,10 @@ void SynthCursoAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
                                *parameters.getRawParameterValue("osctwo"),
                                *parameters.getRawParameterValue("typeoscone"),
                                *parameters.getRawParameterValue("typeosctwo"),
-                               *parameters.getRawParameterValue("lfoone"));
+                               *parameters.getRawParameterValue("lfoone"),
+                               *parameters.getRawParameterValue("lfotwo"),
+                               *parameters.getRawParameterValue("lfooneButton"),
+                               *parameters.getRawParameterValue("lfotwoButton"));
         }
     }
     

@@ -6,6 +6,12 @@
               pluginManufacturer="Tec">
   <MAINGROUP id="LqWnrd" name="SynthCurso">
     <FILE id="KmoBRh" name="AudioHelpers.h" compile="0" resource="0" file="Source/AudioHelpers.h"/>
+    <GROUP id="{C970E5AB-54B5-E46A-E996-37E81F67B9B2}" name="Assets">
+      <FILE id="dlTwa6" name="off.png" compile="0" resource="1" file="Assets/off.png"/>
+      <FILE id="sM41Qz" name="background.png" compile="0" resource="1" file="Assets/background.png"/>
+      <FILE id="oTqPCC" name="on.png" compile="0" resource="1" file="Assets/on.png"/>
+      <FILE id="dkA33M" name="knob.png" compile="0" resource="1" file="Assets/knob.png"/>
+    </GROUP>
     <GROUP id="{EAAAD254-2E52-6328-C63D-3F0BED585D44}" name="Source">
       <FILE id="PqFn1c" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
@@ -29,6 +35,10 @@
       <FILE id="WkvW91" name="Synth_Volumen.cpp" compile="1" resource="0"
             file="Source/Synth_Volumen.cpp"/>
       <FILE id="Xi96rz" name="Synth_Volumen.h" compile="0" resource="0" file="Source/Synth_Volumen.h"/>
+    </GROUP>
+    <GROUP id="{0DD5FD40-0C85-B2E9-F6B6-F17D995E2574}" name="GUI">
+      <FILE id="Uc41B5" name="Synth_LookAndFeel.h" compile="0" resource="0"
+            file="Source/Synth_LookAndFeel.h"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>

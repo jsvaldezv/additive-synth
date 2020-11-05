@@ -2,6 +2,7 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
+#include "Synth_LookAndFeel.h"
 
 class SynthCursoAudioProcessorEditor  : public juce::AudioProcessorEditor,
                                         public juce::ComboBox::Listener,
@@ -23,14 +24,29 @@ private:
     juce::Slider volumenSlider;
     juce::Slider volumenOscOne;
     juce::Slider volumenOscTwo;
+    juce::Slider rateLFOOne;
+    juce::Slider rateLFOTwo;
     juce::ComboBox typeOscOne;
     juce::ComboBox typeOscTwo;
+    
+    juce::ScopedPointer<juce::ImageButton> offLfoOne;
+    juce::ScopedPointer<juce::ImageButton> offLfoTwo;
+    
+    juce::Image mOnImagen;
+    juce::Image mOffImagen;
+    juce::Image mBackgroundImagen;
+    
+    Synth_LookAndFeel synthDesign;
     
     std::unique_ptr <juce::AudioProcessorValueTreeState::SliderAttachment> volumenAttachment;
     std::unique_ptr <juce::AudioProcessorValueTreeState::SliderAttachment> oscOneAttachment;
     std::unique_ptr <juce::AudioProcessorValueTreeState::SliderAttachment> oscTwoAttachment;
+    std::unique_ptr <juce::AudioProcessorValueTreeState::SliderAttachment> lfoRateOneAttachment;
+    std::unique_ptr <juce::AudioProcessorValueTreeState::SliderAttachment> lfoRateTwoAttachment;
     std::unique_ptr <juce::AudioProcessorValueTreeState::ComboBoxAttachment> typeOscOneAttachment;
     std::unique_ptr <juce::AudioProcessorValueTreeState::ComboBoxAttachment> typeOscTwoAttachment;
+    std::unique_ptr <juce::AudioProcessorValueTreeState::ButtonAttachment> powerLFOOneAttachment;
+    std::unique_ptr <juce::AudioProcessorValueTreeState::ButtonAttachment> powerLFOTwoAttachment;
     
     SynthCursoAudioProcessor& audioProcessor;
 

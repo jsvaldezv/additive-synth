@@ -54,3 +54,5 @@ JuceLibraryCode/ReadMe.txt
 .DS_Store
 Builds/MacOSX/SynthCurso.xcodeproj/project.xcworkspace/contents.xcworkspacedata
 Builds/MacOSX/SynthCurso.xcodeproj/xcuserdata/jsvaldezv.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+Builds/MacOSX/build/Debug/SynthCurso.app/Contents/MacOS/SynthCurso
+Builds/MacOSX/build/Debug/SynthCurso.app/Contents/PkgInfo

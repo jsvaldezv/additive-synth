@@ -11,6 +11,8 @@ Synth_Voice::Synth_Voice()
     valTypeOne = 0;
     valTypeTwo = 0;
     rateLFOOne = 0.0;
+    valOnLfoOne = false;
+    valOnLfoTwo = false;
 }
 
 Synth_Voice::~Synth_Voice()
@@ -33,7 +35,10 @@ void Synth_Voice::getParams(float inVolGen,
                             float inOscTwo,
                             int inTypeOne,
                             int inTypeTwo,
-                            float inRateLfoONe)
+                            float inRateLfoONe,
+                            float inRateLfoTwo,
+                            bool onLfoOne,
+                            bool onLfoTwo)
 {
     volGeneral = inVolGen;
     volOscOne = inOscOne;
@@ -41,6 +46,9 @@ void Synth_Voice::getParams(float inVolGen,
     valTypeOne = inTypeOne;
     valTypeTwo = inTypeTwo;
     rateLFOOne = inRateLfoONe;
+    rateLFOTwo = inRateLfoTwo;
+    valOnLfoOne = onLfoOne;
+    valOnLfoTwo = onLfoTwo;
 }
 
 void Synth_Voice::startNote (int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition)
@@ -64,15 +72,22 @@ void Synth_Voice::renderNextBlock (juce::AudioBuffer<float> &outputBuffer,
         double osc1Signal = osc1.oscillatorOne(frequency, valTypeOne) * level * volOscOne;
         double osc2Signal = osc1.oscillatorTwo(frequency, valTypeTwo) * level * volOscTwo;
         double lfo1Signal = lfo1.LFOOne(rateLFOOne) * level;
+        double lfo2Signal = lfo2.LFOTwo(rateLFOTwo) * level;
         
         smoothOsc1 = smoothOsc1 - 0.002*(smoothOsc1 - osc1Signal);
         smoothOsc2 = smoothOsc2 - 0.002*(smoothOsc2 - osc2Signal);
         //OBTENER SAMPLES DE WAVETABLE
         for (int channel=0; channel < outputBuffer.getNumChannels(); channel++)
         {
-            outputBuffer.addSample(channel, startSample, (smoothOsc1 + smoothOsc2) * lfo1Signal);
+            if((valOnLfoOne == false) && (valOnLfoTwo == false))
+                outputBuffer.addSample(channel, startSample, (smoothOsc1 + smoothOsc2));
+            if((valOnLfoOne == false) && (valOnLfoTwo == true))
+                outputBuffer.addSample(channel, startSample, (smoothOsc1 + smoothOsc2) * lfo2Signal);
+            if((valOnLfoOne == true) && (valOnLfoTwo == false))
+                outputBuffer.addSample(channel, startSample, (smoothOsc1 + smoothOsc2) * lfo1Signal);
+            if((valOnLfoOne == true) && (valOnLfoTwo == true))
+                outputBuffer.addSample(channel, startSample, (smoothOsc1 + smoothOsc2) * lfo2Signal * lfo1Signal);
         }
-
         ++startSample;
     }
 }

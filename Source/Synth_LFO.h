@@ -14,11 +14,12 @@ public:
                  float* outAudio,
                  float inSampleToRender);
     double LFOOne(double frequency);
+    double LFOTwo(double frequency);
     
 private:
     
     juce::Array<float> waveTableSineWave;
     
     double phase, amplitude, frequency, increment, wtSize, mySampleRate;
-    double output;
+    double output1, output2;
 };
