@@ -35,53 +35,53 @@ juce::AudioProcessorValueTreeState::ParameterLayout SynthCursoAudioProcessor::in
 {
     std::vector <std::unique_ptr<juce::RangedAudioParameter>> params;
     
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("volume",
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("volume", 1),
                                                                  "Volume",
                                                                  0.0f,
                                                                  1.0f,
                                                                  0.5f));
     
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("oscone",
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("oscone", 1),
                                                                  "Oscone",
                                                                  0.0f,
                                                                  1.0f,
                                                                  0.5f));
     
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("osctwo",
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("osctwo", 1),
                                                                  "Osctwo",
                                                                  0.0f,
                                                                  1.0f,
                                                                  0.5f));
     
-    params.push_back(std::make_unique<juce::AudioParameterChoice>("typeoscone",
+    params.push_back(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID("typeoscone", 1),
                                                                   "Typeoscone",
                                                                   juce::StringArray("Sine",
                                                                                     "Square",
                                                                                     "Triangle"),0));
     
-    params.push_back(std::make_unique<juce::AudioParameterChoice>("typeosctwo",
+    params.push_back(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID("typeosctwo", 1),
                                                                   "Typeosctwo",
                                                                   juce::StringArray("Sine",
                                                                                     "Square",
                                                                                     "Triangle"),0));
     
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("lfoone",
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("lfoone", 1),
                                                                  "Lfoone",
                                                                  1.0f,
                                                                  10.0f,
                                                                  1.0f));
     
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("lfotwo",
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("lfotwo", 1),
                                                                  "Lfotwo",
                                                                  1.0f,
                                                                  10.0f,
                                                                  1.0f));
     
-    params.push_back(std::make_unique<juce::AudioParameterBool>("lfooneButton",
+    params.push_back(std::make_unique<juce::AudioParameterBool>(juce::ParameterID("lfooneButton", 1),
                                                                 "LfooneButton",
                                                                 false));
     
-    params.push_back(std::make_unique<juce::AudioParameterBool>("lfotwoButton",
+    params.push_back(std::make_unique<juce::AudioParameterBool>(juce::ParameterID("lfotwoButton", 1),
                                                                 "LfotwoButton",
                                                                 false));
     
